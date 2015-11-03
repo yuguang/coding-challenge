@@ -65,7 +65,7 @@ class Graph:
                 sum_vertices += 1
         return float(sum_degree)/sum_vertices
 
-with open(os.path.join(settings.INPUT_DIR, 'tweets.txt')) as input_file:
+with open(os.path.join(settings.INPUT_DIR, 'tweets.txt')) as input_file, open(os.path.join(settings.OUTPUT_DIR, 'ft2.txt'), 'w') as output_file:
     window = deque()
     graph = Graph()
     for start_index, line in enumerate(input_file):
@@ -77,4 +77,4 @@ with open(os.path.join(settings.INPUT_DIR, 'tweets.txt')) as input_file:
         while window[0].get_timestamp() < start_time:
             old_tweet = window.popleft()
             graph.unlink_hashtags(old_tweet)
-        print graph.average_degree()
+        output_file.write('{}\n'.format(graph.average_degree()))
